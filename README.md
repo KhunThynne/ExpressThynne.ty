@@ -1,4 +1,4 @@
 # ExpressThynne.ty
 
-###npm build
+### `npm build`
 Build tyscript to js
