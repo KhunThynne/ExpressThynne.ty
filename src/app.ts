@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, '../..', 'FrontEnd')));
 app.use(cookieParser())
 console.log(window.location.host)
 app.use('/service', cors({
-    "origin": `'https://thytest.xd-studio.net/'`,
+    "origin": *,
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     "preflightContinue": false,
 
