@@ -14,11 +14,12 @@ app.use(logger("dev"))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.set('title', 'Thynne');
-app.use(express.static(path.join(__dirname, '../..', 'FrontEnd')));
+app.use(express.static(path.join(__dirname, '../..', 'dist')));
 app.use(cookieParser())
-console.log(window.location.host)
+require('dotenv').config();
+
 app.use('/service', cors({
-    "origin": *,
+    "origin": '*',
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     "preflightContinue": false,
 
@@ -26,10 +27,10 @@ app.use('/service', cors({
 }), require('./service/index'))
 app.get('*', (req, res) => {
     //res.cookie('rememberme', 'yes', { maxAge: 900000, httpOnly: false});
-    res.sendFile(path.resolve(__dirname, '../..', 'FrontEnd', 'index.html'));
+    res.sendFile(path.resolve(__dirname, '../..', 'dist', 'index.html'));
 });
 
-var server = app.listen(port, () => console.log(`Application is running on port ${port}`))
+var server = app.listen(process.env.PORT, () => console.log(`Application is running on port ${process.env.PORT}`))
 const io = new Server(server);
 io.sockets.on('connection', function (socket: any) {
     console.log(`listening on *:${port}`);
