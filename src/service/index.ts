@@ -1,15 +1,17 @@
 import express, { Router, Request, Response } from 'express'
-
 var mysql = require('mysql');
-
 const service: Router = express.Router();
-
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "root",
     database: "test"
 });
+
+service.get('/test', async (req: Request, res: Response) => {
+    
+    res.json({"status":""})
+})
 
 service.get('/', async (req: Request, res: Response) => {
     let result: any
@@ -28,8 +30,6 @@ service.get('/', async (req: Request, res: Response) => {
     }
     res.json(await result)
 })
-
-
 
 
 
