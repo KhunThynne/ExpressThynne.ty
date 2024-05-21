@@ -1,14 +1,17 @@
 {
   "name": "backend",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
-  "main": "src/app.ts",
+  "main": "./dist/bin/www.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-dev  ./bin/www.ts",
-    "start": "tsc && node dist/bin/www.js",
+    "dev": "ts-node-dev -r tsconfig-paths/register ./bin/www.ts",
+    "start": "tsc && node -r tsconfig-paths/register dist/bin/www.js",
     "lint": "eslint . --ext .ts",
     "build": "tsc"
+  },
+  "_moduleAliases": {
+    "@": "/public/"
   },
   "keywords": [],
   "author": "",
@@ -19,24 +22,27 @@
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
-    "express": "^4.18.2",
+    "express": "^5.0.0-beta.3",
     "faker": "^6.6.6",
     "http": "^0.0.1-security",
     "morgan": "^1.10.0",
-    "mysql": "^2.18.1",
+    "mysql": "github:mysqljs/mysql",
     "net": "^1.0.2",
     "react": "^18.2.0",
     "socket.io": "^4.6.2",
-    "sqlite3": "^5.1.7",
-    "tsconfig-paths": "^4.2.0"
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.3.0",
     "@types/express": "^4.17.17",
-    "@types/node": "^20.4.3",
+    "@types/module-alias": "^2.0.4",
+    "@types/node": "^20.12.12",
     "eslint": "^8.57.0",
+    "module-alias": "^2.2.3",
+    "prisma": "^5.14.0",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.10.0"
   }

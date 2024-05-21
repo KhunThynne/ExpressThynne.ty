@@ -1,4 +1,10 @@
 {
+  "ts-node": {
+    // Do not forget to `npm i -D tsconfig-paths`
+    "require": [
+      "tsconfig-paths/register"
+    ]
+  },
   "compilerOptions": {
     "module": "commonjs",
     "esModuleInterop": true,
@@ -7,12 +13,17 @@
     "sourceMap": true,
     "outDir": "dist",
     "moduleDetection": "force",
-    // "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "publics/*"
+      ]
+    }
   },
   "lib": [
     "es2015"
   ],
-  "include": [
-    "src"
+  "exclude": [
+    "node_modules"
   ]
 }

@@ -1,22 +1,36 @@
-// import express, { Express, Request, Response, NextFunction } from 'express'
+import express, { Request, Response, NextFunction, ErrorRequestHandler } from 'express'
 var logger = require('morgan');
 var path = require('path');
-const express = require('express')
+// const express = require('express')
 const app = express()
 // import { Server } from "socket.io";
 var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session')
 var net = require('net');
 var cors = require('cors')
+
+
 app.engine('html', require('ejs').renderFile);
 app.use(logger("dev"))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.set('title', 'Thynne');
-app.use(express.static(path.join(__dirname, './src')));
+// app.use(express.static(path.join(__dirname, './src')));
 app.use(cookieParser())
 
 
+app.use('/', require('./src/controller'));
+app.get('/', (req: Request, res: Response) => {
+    res.status(200).send("success");
+});
+
+
+app.use((err: ErrorRequestHandler, req: Request, res: Response, next: NextFunction) => {
+    console.error(err)
+    res.status(404).sendFile(path.join(__dirname, 'public', 'error.html'));
+});
+
+const Service = require('./src/service/router');
 // app.use('/service', cors({
 //     "origin": '*',
 //     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -24,10 +38,17 @@ app.use(cookieParser())
 
 //     "optionsSuccessStatus": 204
 // }), require('./src/service/index'))
+app.use(cors({
+    "origin": '*',
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "preflightContinue": false,
 
-app.get('/', (req: any, res: any) => {
-    res.send("success")
-});
+    "optionsSuccessStatus": 204
+}))
+
+
+
+
 
 app.use('/service', cors({
     "origin": '*',
@@ -35,7 +56,7 @@ app.use('/service', cors({
     "preflightContinue": false,
 
     "optionsSuccessStatus": 204
-}), require('./src/service/index'))
+}), Service)
 
 // const readline = require('readline');
 
@@ -92,4 +113,6 @@ app.use('/service', cors({
 
 
 // }
+
+app.use(require('./bin/midleware/error'));
 module.exports = app;

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+import 'module-alias/register';
 const app = require('../app');
 const http = require('http');
 require('dotenv').config();
@@ -19,7 +19,7 @@ function onError(error: NodeJS.ErrnoException) {
   if (error.syscall !== 'listen') {
     throw error;
   }
-  console.log('Test')
+
   const bind = typeof Port === 'string'
     ? 'Pipe ' + Port
     : 'Port ' + Port;
@@ -44,8 +44,10 @@ function onListening() {
   const addr = server.address();
   const bind = typeof addr === 'string'
     ? 'pipe ' + addr
-    : 'Port ' + addr?.Port;
+    : 'port ' + addr?.port;
 
+
+  console.log(`Application use port ${addr?.port}.\nYou are able at\nhttp://localhost:${addr?.port}\nhttp://127.0.0.1:${addr?.port}`)
 }
 let Port = normalizePort(process.env.PORT || '3002');
 app.set('Port', Port);

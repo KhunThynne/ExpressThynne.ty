@@ -1,15 +1,16 @@
-const express = require('express')
-const app = express()
-async function main(port: Number) {
-    try {
-        const result = await app.listen(port)
-        console.log("outside result", result)
-    } catch (error) {
-        console.log("outside error");
-        console.log(error);
-    }
-}
+import express, { Request, Response, NextFunction, ErrorRequestHandler } from 'express'
+
+const controller = express.Router()
+
+const SQL_Router = require('./router/SQL/router')
 
 
 
-module.exports = main
+controller.use('/', (req: Request, res: Response, next: NextFunction) => {
+    next()
+})
+
+
+controller.use('/database', SQL_Router);
+
+module.exports = controller
