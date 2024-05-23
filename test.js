@@ -4,25 +4,23 @@ const router = express.Router()
 // predicate the router with a check and bail out when needed
 
 
-router.use((req, res, next) => {
-  if (!req.headers['x-auth']) return next('router')
-  next()
+
+
+
+
+
+app.get('/user/:id', (req, res, next) => {
+  // if the user ID is 0, skip to the next route
+  if (req.params.id === '0') next('route')
+  // otherwise pass the control to the next middleware function in this stack
+  else next()
+}, (req, res, next) => {
+  // send a regular response
+  res.send('regular')
 })
 
-router.get('/user/:id', (req, res) => {
-  res.send('hello, user!')
+// handler for the /user/:id path, which sends a special response
+app.get('/user/:id', (req, res, next) => {
+  res.send('special')
 })
-
-// use the router and 401 anything falling through
-app.use('/admin', router, (req, res) => {
-  res.sendStatus(401)
-})
-
-// app.use('/',router)
-
-app.use((err, req, res, next) => {
-  console.error(err.stack)
-  res.status(500).send('Something broke!')
-})
-
-app.listen(3002)
+app.listen(3001)

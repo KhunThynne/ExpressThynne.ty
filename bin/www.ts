@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import 'module-alias/register';
-import Watch from './watch';
-import { Colors } from '../public/colors_ansi'
+
 const app = require('../app');
 const http = require('http');
 
