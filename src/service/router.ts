@@ -9,7 +9,6 @@ var con = mysql.createConnection({
 });
 
 router.get('/test', async (req: Request, res: Response) => {
-    
     res.json({ "status": "" })
 })
 

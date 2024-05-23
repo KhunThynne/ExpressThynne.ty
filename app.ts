@@ -1,4 +1,7 @@
 import express, { Request, Response, NextFunction, ErrorRequestHandler } from 'express'
+require('dotenv').config();
+// require('dotenv').config({ path: '.env.production' });
+
 var logger = require('morgan');
 var path = require('path');
 // const express = require('express')
@@ -19,16 +22,20 @@ app.set('title', 'Thynne');
 app.use(cookieParser())
 
 
-app.use('/', require('./src/controller'));
+app.use(require('./src/controller'));
+
+
+
+app.use((err: ErrorRequestHandler, req: Request, res: Response, next: NextFunction) => {
+    // console.error(err)
+    res.send(err)
+    // res.status(404).sendFile(path.join(__dirname, 'public', 'error.html'));
+});
+
 app.get('/', (req: Request, res: Response) => {
     res.status(200).send("success");
 });
 
-
-app.use((err: ErrorRequestHandler, req: Request, res: Response, next: NextFunction) => {
-    console.error(err)
-    res.status(404).sendFile(path.join(__dirname, 'public', 'error.html'));
-});
 
 const Service = require('./src/service/router');
 // app.use('/service', cors({

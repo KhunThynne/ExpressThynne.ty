@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 import 'module-alias/register';
+import Watch from './watch';
+import { Colors } from '../public/colors_ansi'
 const app = require('../app');
 const http = require('http');
-require('dotenv').config();
+
 const server = http.createServer(app);
 function normalizePort(val: string) {
   const Port = parseInt(val, 10);
@@ -40,19 +42,36 @@ function onError(error: NodeJS.ErrnoException) {
   }
 }
 
+
 function onListening() {
+
   const addr = server.address();
   const bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr?.port;
 
 
-  console.log(`Application use port ${addr?.port}.\nYou are able at\nhttp://localhost:${addr?.port}\nhttp://127.0.0.1:${addr?.port}`)
+
+
 }
 let Port = normalizePort(process.env.PORT || '3002');
 app.set('Port', Port);
 server.listen(Port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+
+
+
+console.log(`Application use port ${Port}\n\nhttp://localhost:${Port}\nhttp://127.0.0.1:${Port}`)
+
+
+// Setting up a variety of color code constants
+
+
+// Change the color constant below and see what happens!
+
+
+
 
 
