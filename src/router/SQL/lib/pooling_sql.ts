@@ -51,10 +51,21 @@ const set_database = (database: string) => {
             connection.release();
 
         }
-
         );
 
-        // reject();  // when error
+        process.on('SIGINT', () => {
+            if (pool) {
+                pool.end((err) => {
+                    if (err) {
+                        console.error('Error closing the database connection pool: ', err.message);
+                    }
+                    console.log('Database connection pool closed');
+                    process.exit(0);
+                });
+            } else {
+                process.exit(0);
+            }
+        });
     });
 
 
@@ -98,20 +109,8 @@ const set_database = (database: string) => {
 // }
 
 
-// // Handle server shutdown gracefully
-// process.on('SIGINT', () => {
-//     if (pool) {
-//         pool.end((err) => {
-//             if (err) {
-//                 console.error('Error closing the database connection pool: ', err.message);
-//             }
-//             console.log('Database connection pool closed');
-//             process.exit(0);
-//         });
-//     } else {
-//         process.exit(0);
-//     }
-// });
+// Handle server shutdown gracefully
+
 
 const queryDatabase = (query, pool) => {
     return new Promise<any>((resolve, reject) => {

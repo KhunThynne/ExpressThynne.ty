@@ -5,7 +5,10 @@ import { queryDatabase } from './lib/pooling_sql';
 
 
 // con.connect()
-
+router.use((req, res, next) => {
+    console.log("test")
+    next()
+})
 
 router.get('/', (req: any, res: Response) => {
     res.json({ "database": req.database })
@@ -15,7 +18,8 @@ router.get('/', (req: any, res: Response) => {
 
 
 
-router.get('/select/:table?', async (req: Request | any, res) => {
+router.get('/select/:table', async (req: Request | any, res) => {
+   
     let result: any;
     const query = `SELECT * FROM ${req.params.table} ${req.query.query}`
 
