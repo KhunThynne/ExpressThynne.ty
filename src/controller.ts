@@ -4,7 +4,13 @@ import express, { Request, Response, NextFunction, ErrorRequestHandler } from 'e
 
 const controller = express.Router()
 
-controller.use(require('./Users'))
+
+controller.use((req, res, next) => {
+    if (req.headers['secret-key'] === process.env.SECRET_KEY) return next()
+    res.sendStatus(401)
+})
+
+controller.use(require('./router'))
 
 
 module.exports = controller
