@@ -9,6 +9,7 @@
     "start": "tsc && set NODE_ENV=production && node dist/bin/www.js",
     "lint": "eslint . --ext .ts",
     "build": "tsc"
+  
   },
   "_moduleAliases": {
     "@": "/public/"
